@@ -1,43 +1,69 @@
-==========
-	
-##本项目为日常工作中的使用的python脚本
+# 爬虫项目
+
+## 免责声明
+
+<font color="red" size="14">本软件仅用于学术研究，但因在中国大陆频频出现爬虫开发者涉诉与违规相关的[新闻](https://github.com/HiddenStrawberry/Crawler_Illegal_Cases_In_China)。<br></font>
+
+<h3>使用者需遵守其所在地的相关法律法规。因违法违规使用造成的一切后果，使用者自行承担</h3>
+
+这个项目是主要自己研究招聘网站上的职位以及对应的需求准备的一个python项目。
+项目基于scrapy框架进行爬虫，使用mongodb存储爬取数据。
+前端界面使用`vue`编写,后端接口为 php
+
+在线预览地址: [Demo](http://yehe.37he.cn/job/)
+
+- 项目目录结构图
+
+```
+
+├─backend php后端接口
+├─front 前端界面
+│  ├─job                vue
+│  ├─company.html       热门公司
+│  ├─education.html     学历分析
+│  ├─weekline.html      发布趋势
+├─tutorial python爬虫
+│  ├─spiders           爬虫
+│  │  ├─51job.py       51job爬虫
+│  │  ├─lagou.py       拉钩爬虫
+│  │  ├─zhipin.py      直聘爬虫
+│  ├─items.py          数据项
+│  ├─middlewares.py    中间件
+│  ├─pipelines.py      管道
+│  ├─settings.py       项目配置
+├─word.json 生成的英文技术词json
+├─word.py 生成英文分词
+├─stop.txt 停用词列表
+```
+
+## 安装
+
+```shell
+pip install -f requirements.txt
+```
+- 请安装mongodb、redis
+
+- python 请选用3.6+以上的版本。需要的依赖有 pymongo、scrapy、redis、pyquery(后期可能会移除)
+
+- php请安装 [mogodb拓展](http://pecl.php.net/package/mongodb) 并且依赖 [mongodb/mongodb](https://packagist.org/packages/mongodb/mongodb)
+
+  ```shell
+  composer require mongodb/mongodb
+  ```
 
 
-###1.  ssh_thread.py  是一个批量执行命令的脚本，支持直接执行ssh命令及文件传输，支持多线程
 
-		使用说明如下：
-	
-		-h,-H,--help         帮助页面 
-        -C, --cmd            执行命令模式 
-        -M, --command        执行命令模式 
-        -S, --sendfile       传输文件模式 
-        -L, --localpath      本地文件路径 
-        -R, --remotepath     远程服务器路径 
+### 运行爬虫
 
-	    IP列表格式:
+```bash
+scrapy crawl boss #抓boss
+scrapy crawl 51job #抓51job
+scrapy crawl lagou #拉钩
+```
+## windows下其他问题
 
-   	    IP地址		用户名     密码     端口
-	    192.168.1.1        root	  123456    22
+ 1. 出现`Get it with Microsoft Visual C++ Build Tools: http://landinghub.visualstudio.com/visual-cpp-build-tools`
 
-      	e.g.
-              批量执行命令格式： -C "IP列表" -M '执行的命令'
-              批量传送文件：     -S "IP列表" -L "本地文件路径" -R "远程文件路径"
-	    错误日志文件：$PWD/ssh_errors.log
-
-###2. check_ping.py  多进程检测ping，并取值
-	
-		默认开启4个进程，需要将hosts.txt IP列表文件放入同一目录下，IP列表每行一个，支持域名、IP
+请到[https://www.lfd.uci.edu/~gohlke/pythonlibs/](https://www.lfd.uci.edu/~gohlke/pythonlibs/) 下载对应的whl文件 然后执行 `pip install xxxx.whl`
 
 
-###3. check_ip138.py 通过ip138检测IP（域名）归属地
-
-		使用方法: python check_ip138.py  192.168.1.1
-	
-	
-	
-	
-###4. vps_baidu.py  使用baidupan备份VPS
-
-		pip install baidupan
-	
-参考：http://solos.github.io/baidupan/
